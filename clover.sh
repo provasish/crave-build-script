@@ -5,6 +5,9 @@ TOKEN="8614247175:AAHQzSIbrgB1pNXQ-J2vyUsQUbpOWvQ_6Qc"
 CHAT_ID="-1003529010804"
 DEVICE="spartan"
 
+# Start the timer
+START=$(date +%s)
+
 # 1. Initialize and Sync
 echo "--- Initializing The Clover Project ---"
 repo init -u https://github.com/The-Clover-Project/manifest.git -b 16-qpr2 --git-lfs --depth=1
@@ -40,6 +43,11 @@ mka clover -j$(nproc --all)
 # 7. Check Status and Upload
 status=$?
 if [ $status -eq 0 ]; then
+    # Calculate duration
+    END=$(date +%s)
+    DIFF=$((END - START))
+    DURATION="$((DIFF / 60)) minute(s) and $((DIFF % 60)) seconds"
+
     echo "--- BUILD SUCCESS ---"
     OUT_DIR="out/target/product/$DEVICE"
     ZIP_PATH=$(ls $OUT_DIR/Clover*.zip 2>/dev/null | head -n 1)
@@ -52,21 +60,22 @@ if [ $status -eq 0 ]; then
         RESULT_ZIP=$(curl -sSL https://raw.githubusercontent.com/elohim-etz/GoFile-Upload/main/upload.sh | bash -s -- "$ZIP_PATH")
         URL_ZIP=$(echo "$RESULT_ZIP" | grep -o "https://gofile.io/d/[a-zA-Z0-9]*")
 
-        # Upload spartan.json (if it exists)
+        # Upload spartan.json
         if [ -f "$JSON_PATH" ]; then
             RESULT_JSON=$(curl -sSL https://raw.githubusercontent.com/elohim-etz/GoFile-Upload/main/upload.sh | bash -s -- "$JSON_PATH")
             URL_JSON=$(echo "$RESULT_JSON" | grep -o "https://gofile.io/d/[a-zA-Z0-9]*")
         fi
 
-        # Prepare Telegram Message
-        MESSAGE="✅ *Clover Project for realme GT NEO 3T Build Complete!*%0A%0A📦 *ROM:* [Download Link]($URL_ZIP)"
+        # Prepare Telegram Message (HTML Mode for perfect links)
+        MESSAGE="✅ <b>Clover Project for realme GT NEO 3T Build Complete!</b>%0A%0A📦 <b>ROM:</b> <a href='$URL_ZIP'>Download</a>"
         if [ -n "$URL_JSON" ]; then
-            MESSAGE+="%0A📄 *Metadata:* [spartan.json Link]($URL_JSON)"
+            MESSAGE+="%0A📄 <b>Metadata:</b> <a href='$URL_JSON'>spartan.json</a>"
         fi
+        MESSAGE+="%0A%0A⏱ <b>Build Time:</b> $DURATION"
 
         curl -s -X POST "https://api.telegram.org/bot$TOKEN/sendMessage" \
              -d "chat_id=$CHAT_ID" \
-             -d "parse_mode=Markdown" \
+             -d "parse_mode=HTML" \
              -d "text=$MESSAGE"
     else
         curl -s -X POST "https://api.telegram.org/bot$TOKEN/sendMessage" \
