@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # --- CONFIGURATION ---
-TOKEN="8614247175:AAHQzSIbrgB1pNXQ-J2vyUsQUbpOWvQ_6Qc"
+TOKEN="8614247175:AAFzAHu9D6oLheZ9f5TX_YYcgfsr88KRKh0"
 CHAT_ID="-1003529010804"
 DEVICE="spartan"
 
@@ -10,7 +10,7 @@ START=$(date +%s)
 
 # 1. Initialize and Sync
 echo "--- Initializing EvolutionX ---"
-repo init -u https://github.com/Evolution-X/manifest -b bq2 --git-lfs --depth=1
+repo init -u https://github.com/Evolution-X/manifest -b bka --git-lfs --depth=1
 /opt/crave/resync.sh
 
 # 2. Clean up old specific repos
