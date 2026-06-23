@@ -51,7 +51,7 @@ if [ $status -eq 0 ]; then
     echo "--- BUILD SUCCESS ---"
     OUT_DIR="out/target/product/$DEVICE"
     ZIP_PATH=$(ls $OUT_DIR/Clover*.zip 2>/dev/null | head -n 1)
-    JSON_PATH="$OUT_DIR/spartan.json"
+    JSON_PATH="$OUT_DIR/spartan_gms.json"
     
     if [ -f "$ZIP_PATH" ]; then
         echo "Uploading files to GoFile..."
