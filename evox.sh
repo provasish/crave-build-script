@@ -23,7 +23,7 @@ git clone https://github.com/Evolution-X-Devices/device_realme_spartan device/re
 git clone https://github.com/EvoX-Spartan/android_device_realme_sm8250-common device/realme/sm8250-common
 git clone https://github.com/Evolution-X-Devices/vendor_realme_spartan vendor/realme/spartan
 git clone --depth=1 https://github.com/EvoX-Spartan/proprietary_vendor_realme_sm8250-common vendor/realme/sm8250-common
-git clone --depth=1 https://github.com/EvoX-Spartan/android_kernel_realme_sm8250 kernel/realme/sm8250
+git clone --depth=1 https://github.com/provasish/android_kernel_qcom_sm8250 kernel/realme/sm8250
 git clone https://github.com/EvoX-Spartan/hardware_dolby hardware/dolby
 git clone https://github.com/EvoX-Spartan/android_hardware_oplus hardware/oplus
 git clone --depth=1 https://gitlab.com/provasishh/proprietary_vendor_oplus_camera.git vendor/oplus/camera
